@@ -12,7 +12,8 @@ import {
   Zap,
   LogOut,
   Copy,
-  PlayCircle
+  PlayCircle,
+  Database
 } from "lucide-react";
 import { useVault } from "@/contexts/VaultContext";
 import { useGlobalShortcuts } from "@/hooks/useGlobalShortcuts";
@@ -134,7 +135,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           <NavItem href="/history" icon={History} label="History" active={location === "/history"} />
           <NavItem href="/duplicates" icon={Copy} label="Duplicates" active={location === "/duplicates"} />
           <NavItem href="/local-player" icon={PlayCircle} label="Local Player" active={location === "/local-player"} />
-          <NavItem href="/manage-metadata" icon={Settings} label="Metadata" active={location === "/manage-metadata"} />
+          <NavItem href="/manage-metadata" icon={Database} label="Metadata" active={location === "/manage-metadata"} />
           {isVaultVisible && (
             <NavItem href="/vault" icon={Lock} label="Secure Vault" active={location === "/vault"} />
           )}
