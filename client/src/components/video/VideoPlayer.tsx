@@ -79,6 +79,15 @@ export function VideoPlayer({
   const [availableAudioTracks, setAvailableAudioTracks] = useState<string[]>(["Default"]);
   const [previewFrame, setPreviewFrame] = useState<string | null>(null);
 
+  // Seek function - defined early to avoid reference errors
+  const seekTo = useCallback((clientX: number) => {
+    if (!progressRef.current || !videoRef.current) return;
+    const rect = progressRef.current.getBoundingClientRect();
+    const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    videoRef.current.currentTime = percent * duration;
+    setCurrentTime(percent * duration);
+  }, [duration]);
+
   // Initialize video and HLS
   useEffect(() => {
     const video = videoRef.current;
@@ -160,7 +169,7 @@ export function VideoPlayer({
     }
   }, [subtitlesEnabled]);
 
-  // Handle mouse up for drag end
+  // Handle mouse up for drag end and global mouse move for smooth dragging
   useEffect(() => {
     const handleMouseUp = () => {
       if (isDragging) {
@@ -168,11 +177,24 @@ export function VideoPlayer({
       }
     };
 
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging && progressRef.current && videoRef.current) {
+        const rect = progressRef.current.getBoundingClientRect();
+        const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        videoRef.current.currentTime = percent * duration;
+        setCurrentTime(percent * duration);
+      }
+    };
+
     if (isDragging) {
       window.addEventListener("mouseup", handleMouseUp);
-      return () => window.removeEventListener("mouseup", handleMouseUp);
+      window.addEventListener("mousemove", handleGlobalMouseMove);
+      return () => {
+        window.removeEventListener("mouseup", handleMouseUp);
+        window.removeEventListener("mousemove", handleGlobalMouseMove);
+      };
     }
-  }, [isDragging]);
+  }, [isDragging, duration]);
 
   // Auto-hide controls (but not metadata bar)
   const resetControlsTimeout = useCallback(() => {
@@ -321,14 +343,6 @@ export function VideoPlayer({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFullscreen, onBack, subtitlesEnabled, togglePlayPause, toggleMute, adjustVolume, skip, toggleFullscreen]);
-
-  const seekTo = useCallback((clientX: number) => {
-    if (!progressRef.current || !videoRef.current) return;
-    const rect = progressRef.current.getBoundingClientRect();
-    const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-    videoRef.current.currentTime = percent * duration;
-    setCurrentTime(percent * duration);
-  }, [duration]);
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDragging) {
