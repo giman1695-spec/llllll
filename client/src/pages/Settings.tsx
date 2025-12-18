@@ -24,6 +24,10 @@ export default function Settings() {
   const [profilePicture, setProfilePicture] = useState<string>("");
   const imageInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
+  const cardImageInputRef = useRef<HTMLInputElement>(null);
+  const cardVideoInputRef = useRef<HTMLInputElement>(null);
+  const sidebarImageInputRef = useRef<HTMLInputElement>(null);
+  const sidebarVideoInputRef = useRef<HTMLInputElement>(null);
   const profilePicInputRef = useRef<HTMLInputElement>(null);
 
   const handleSaveSettings = () => {
@@ -49,6 +53,54 @@ export default function Settings() {
       try {
         const dataUrl = await handleVideoUpload(file);
         setSettings({...settings, appBackgroundVideo: dataUrl, appBackgroundImage: ''});
+      } catch (err) {
+        alert(err instanceof Error ? err.message : 'Failed to upload video');
+      }
+    }
+  };
+
+  const handleCardImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        const dataUrl = await handleImageUpload(file);
+        setSettings({...settings, cardBackgroundImage: dataUrl, cardBackgroundVideo: ''});
+      } catch (err) {
+        alert(err instanceof Error ? err.message : 'Failed to upload image');
+      }
+    }
+  };
+
+  const handleCardVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        const dataUrl = await handleVideoUpload(file);
+        setSettings({...settings, cardBackgroundVideo: dataUrl, cardBackgroundImage: ''});
+      } catch (err) {
+        alert(err instanceof Error ? err.message : 'Failed to upload video');
+      }
+    }
+  };
+
+  const handleSidebarImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        const dataUrl = await handleImageUpload(file);
+        setSettings({...settings, sidebarBackgroundImage: dataUrl, sidebarBackgroundVideo: ''});
+      } catch (err) {
+        alert(err instanceof Error ? err.message : 'Failed to upload image');
+      }
+    }
+  };
+
+  const handleSidebarVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        const dataUrl = await handleVideoUpload(file);
+        setSettings({...settings, sidebarBackgroundVideo: dataUrl, sidebarBackgroundImage: ''});
       } catch (err) {
         alert(err instanceof Error ? err.message : 'Failed to upload video');
       }
@@ -353,6 +405,186 @@ export default function Settings() {
                   Clear All Backgrounds
                 </Button>
               )}
+
+              <Separator />
+
+              <div className="space-y-4">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Media Card Detail Background Image</Label>
+                  <p className="text-sm text-muted-foreground">Custom background for detail view cards</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="https://example.com/image.jpg"
+                      value={settings.cardBackgroundImage}
+                      onChange={(e) => setSettings({...settings, cardBackgroundImage: e.target.value, cardBackgroundVideo: ''})}
+                      className="bg-secondary/50 border-border/50 text-sm"
+                    />
+                    <Button
+                      onClick={() => cardImageInputRef.current?.click()}
+                      variant="outline"
+                      className="gap-2 text-cyan-400 hover:text-cyan-300 border-cyan-500/30"
+                    >
+                      <Upload className="w-4 h-4" /> Upload
+                    </Button>
+                    <input
+                      ref={cardImageInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      onChange={handleCardImageUpload}
+                      className="hidden"
+                    />
+                  </div>
+                  {settings.cardBackgroundImage && (
+                    <div className="flex items-center gap-2">
+                      <div className="h-12 flex-1 rounded border border-border/50 overflow-hidden">
+                        <img src={settings.cardBackgroundImage} alt="preview" className="w-full h-full object-cover" />
+                      </div>
+                      <button
+                        onClick={() => setSettings({...settings, cardBackgroundImage: ''})}
+                        className="p-2 rounded hover:bg-secondary/50 transition-colors text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Media Card Detail Background Video</Label>
+                  <p className="text-sm text-muted-foreground">Custom video background for detail view cards</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="https://example.com/video.mp4"
+                      value={settings.cardBackgroundVideo}
+                      onChange={(e) => setSettings({...settings, cardBackgroundVideo: e.target.value, cardBackgroundImage: ''})}
+                      className="bg-secondary/50 border-border/50 text-sm"
+                    />
+                    <Button
+                      onClick={() => cardVideoInputRef.current?.click()}
+                      variant="outline"
+                      className="gap-2 text-cyan-400 hover:text-cyan-300 border-cyan-500/30"
+                    >
+                      <Upload className="w-4 h-4" /> Upload
+                    </Button>
+                    <input
+                      ref={cardVideoInputRef}
+                      type="file"
+                      accept="video/mp4,video/webm,video/ogg"
+                      onChange={handleCardVideoUpload}
+                      className="hidden"
+                    />
+                  </div>
+                  {settings.cardBackgroundVideo && (
+                    <div className="flex items-center gap-2">
+                      <div className="h-12 flex-1 rounded border border-border/50 overflow-hidden bg-black/20">
+                        <video src={settings.cardBackgroundVideo} className="w-full h-full object-cover" preload="metadata" />
+                      </div>
+                      <button
+                        onClick={() => setSettings({...settings, cardBackgroundVideo: ''})}
+                        className="p-2 rounded hover:bg-secondary/50 transition-colors text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-4">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Sidebar Background Image</Label>
+                  <p className="text-sm text-muted-foreground">Custom background for sidebar navigation</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="https://example.com/image.jpg"
+                      value={settings.sidebarBackgroundImage}
+                      onChange={(e) => setSettings({...settings, sidebarBackgroundImage: e.target.value, sidebarBackgroundVideo: ''})}
+                      className="bg-secondary/50 border-border/50 text-sm"
+                    />
+                    <Button
+                      onClick={() => sidebarImageInputRef.current?.click()}
+                      variant="outline"
+                      className="gap-2 text-cyan-400 hover:text-cyan-300 border-cyan-500/30"
+                    >
+                      <Upload className="w-4 h-4" /> Upload
+                    </Button>
+                    <input
+                      ref={sidebarImageInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      onChange={handleSidebarImageUpload}
+                      className="hidden"
+                    />
+                  </div>
+                  {settings.sidebarBackgroundImage && (
+                    <div className="flex items-center gap-2">
+                      <div className="h-12 flex-1 rounded border border-border/50 overflow-hidden">
+                        <img src={settings.sidebarBackgroundImage} alt="preview" className="w-full h-full object-cover" />
+                      </div>
+                      <button
+                        onClick={() => setSettings({...settings, sidebarBackgroundImage: ''})}
+                        className="p-2 rounded hover:bg-secondary/50 transition-colors text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-0.5">
+                  <Label className="text-base">Sidebar Background Video</Label>
+                  <p className="text-sm text-muted-foreground">Custom video background for sidebar navigation</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="https://example.com/video.mp4"
+                      value={settings.sidebarBackgroundVideo}
+                      onChange={(e) => setSettings({...settings, sidebarBackgroundVideo: e.target.value, sidebarBackgroundImage: ''})}
+                      className="bg-secondary/50 border-border/50 text-sm"
+                    />
+                    <Button
+                      onClick={() => sidebarVideoInputRef.current?.click()}
+                      variant="outline"
+                      className="gap-2 text-cyan-400 hover:text-cyan-300 border-cyan-500/30"
+                    >
+                      <Upload className="w-4 h-4" /> Upload
+                    </Button>
+                    <input
+                      ref={sidebarVideoInputRef}
+                      type="file"
+                      accept="video/mp4,video/webm,video/ogg"
+                      onChange={handleSidebarVideoUpload}
+                      className="hidden"
+                    />
+                  </div>
+                  {settings.sidebarBackgroundVideo && (
+                    <div className="flex items-center gap-2">
+                      <div className="h-12 flex-1 rounded border border-border/50 overflow-hidden bg-black/20">
+                        <video src={settings.sidebarBackgroundVideo} className="w-full h-full object-cover" preload="metadata" />
+                      </div>
+                      <button
+                        onClick={() => setSettings({...settings, sidebarBackgroundVideo: ''})}
+                        className="p-2 rounded hover:bg-secondary/50 transition-colors text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         );

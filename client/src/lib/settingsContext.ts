@@ -8,6 +8,10 @@ export interface AppSettings {
   appBackground: 'dark' | 'cyber' | 'purple' | 'gradient-cyber' | 'gradient-nature';
   appBackgroundImage: string;
   appBackgroundVideo: string;
+  cardBackgroundImage: string;
+  cardBackgroundVideo: string;
+  sidebarBackgroundImage: string;
+  sidebarBackgroundVideo: string;
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -20,6 +24,10 @@ export const DEFAULT_SETTINGS: AppSettings = {
   appBackground: 'dark',
   appBackgroundImage: '',
   appBackgroundVideo: '',
+  cardBackgroundImage: '',
+  cardBackgroundVideo: '',
+  sidebarBackgroundImage: '',
+  sidebarBackgroundVideo: '',
 };
 
 export function getSettings(): AppSettings {

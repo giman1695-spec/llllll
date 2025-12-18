@@ -95,8 +95,29 @@ export function AppLayout({ children }: AppLayoutProps) {
       )}
 
 
+      {/* Sidebar Background Video */}
+      {settings.sidebarBackgroundVideo && (
+        <video
+          autoPlay
+          muted
+          loop
+          className="fixed left-0 top-0 w-72 h-screen object-cover -z-10 group hover:opacity-100"
+          style={{ pointerEvents: 'none', maxWidth: '288px' }}
+        >
+          <source src={settings.sidebarBackgroundVideo} type="video/mp4" />
+        </video>
+      )}
+
       {/* Sidebar */}
-      <aside className="w-16 hover:w-72 transition-all duration-300 ease-in-out border-r border-sidebar-border bg-sidebar flex flex-col z-20 group relative overflow-hidden">
+      <aside 
+        className="w-16 hover:w-72 transition-all duration-300 ease-in-out border-r border-sidebar-border bg-sidebar flex flex-col z-20 group relative overflow-hidden"
+        style={settings.sidebarBackgroundImage ? {
+          backgroundImage: `url('${settings.sidebarBackgroundImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        } : {}}
+      >
         <div className="h-16 flex items-center justify-center group-hover:justify-start group-hover:px-6 transition-all border-b border-sidebar-border/50">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg">
             <Zap className="w-5 h-5" />
