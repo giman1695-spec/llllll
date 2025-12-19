@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, EyeOff, Eye, Lock } from "lucide-react";
 import { motion } from "framer-motion";
-import titleImage from "@assets/Gemini_Generated_Image_u8gpsqu8gpsqu8gp_1766118495949.png";
+import titleImage from "@assets/Gemini_Generated_Image_2976vw2976vw2976_1766118922127.png";
 
 export default function Login() {
   const [, setLocation] = useLocation();
