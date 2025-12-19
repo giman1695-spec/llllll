@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, EyeOff, Eye, Lock } from "lucide-react";
 import { motion } from "framer-motion";
+import titleImage from "@assets/Untitled_1766119685801.png";
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -39,6 +40,7 @@ export default function Login() {
       >
         {/* Logo */}
         <div className="text-center space-y-3">
+          <img src={titleImage} alt="Kagezen All Shadow" className="h-16 w-auto mx-auto" />
           <p className="text-muted-foreground">Secure media library access</p>
         </div>
 
