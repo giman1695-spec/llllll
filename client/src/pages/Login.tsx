@@ -3,8 +3,9 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Lock, Mail, EyeOff, Eye } from "lucide-react";
+import { Mail, EyeOff, Eye, Lock } from "lucide-react";
 import { motion } from "framer-motion";
+import titleImage from "@assets/Gemini_Generated_Image_u8gpsqu8gpsqu8gp_1766118495949.png";
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -40,15 +41,13 @@ export default function Login() {
         {/* Logo */}
         <div className="text-center space-y-3">
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
             className="inline-block"
           >
-            <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg">
-              <Lock className="w-7 h-7 text-white" />
-            </div>
+            <img src={titleImage} alt="Media Vault" className="h-32 w-auto" />
           </motion.div>
-          <h1 className="text-4xl font-bold tracking-tight font-display">Media Vault</h1>
           <p className="text-muted-foreground">Secure media library access</p>
         </div>
 
