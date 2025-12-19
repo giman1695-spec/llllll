@@ -46,7 +46,7 @@ export default function Login() {
             transition={{ duration: 0.8 }}
             className="inline-block"
           >
-            <img src={titleImage} alt="Media Vault" className="h-32 w-auto" />
+            <img src={titleImage} alt="Media Vault" className="h-48 w-auto object-cover object-center" />
           </motion.div>
           <p className="text-muted-foreground">Secure media library access</p>
         </div>
