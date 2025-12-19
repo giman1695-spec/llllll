@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, EyeOff, Eye, Lock } from "lucide-react";
 import { motion } from "framer-motion";
-import titleImage from "@assets/Gemini_Generated_Image_2976vw2976vw2976_1766118922127.png";
+import titleImage from "@assets/Gemini_Generated_Image_6v7sw56v7sw56v7s_1766119097344.png";
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -46,7 +46,7 @@ export default function Login() {
             transition={{ duration: 0.8 }}
             className="inline-block"
           >
-            <img src={titleImage} alt="Media Vault" className="h-48 w-auto object-cover object-center" />
+            <img src={titleImage} alt="Media Vault" className="h-20 w-auto" />
           </motion.div>
           <p className="text-muted-foreground">Secure media library access</p>
         </div>
