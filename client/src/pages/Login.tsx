@@ -41,7 +41,6 @@ export default function Login() {
         {/* Logo */}
         <div className="text-center space-y-3">
           <img src={titleImage} alt="Kagezen All Shadow" className="h-32 w-auto mx-auto" />
-          <p className="text-muted-foreground">Secure media library access</p>
         </div>
 
         {/* Login Form */}
